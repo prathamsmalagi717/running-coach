@@ -100,6 +100,9 @@ function describeError(resp: Response, body: string): string {
 		case 402:
 			return "This Strava endpoint is only available to athletes with a Strava subscription.";
 		case 403:
+			if (body.includes('"Inactive"')) {
+				return "Strava has marked the API application as inactive, so it refuses all requests. Check the app at https://www.strava.com/settings/api for a notice (such as an updated API Agreement to accept) or contact Strava developer support. Reconnecting the connector won't help.";
+			}
 			return `Strava denied access. The connector may be missing a permission (scope); reconnect and tick every box on Strava's consent page. Details: ${body}`;
 		case 404:
 			return "Not found on Strava (or it belongs to another athlete and is private).";

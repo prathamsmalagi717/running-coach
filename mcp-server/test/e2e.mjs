@@ -119,7 +119,9 @@ const zones = await call(tok.access_token, "get_activity_zones", { activity_id: 
 assert.equal(zones.isError, true); assert.match(zones.content[0].text, /subscription/);
 const rl = await call(tok.access_token, "list_starred_segments");
 assert.equal(rl.isError, true); assert.match(rl.content[0].text, /rate limit/);
-step(`402 and 429 surface as readable tool errors`);
+const inactive = await call(tok.access_token, "list_clubs");
+assert.equal(inactive.isError, true); assert.match(inactive.content[0].text, /inactive/);
+step(`402, 403 inactive app and 429 surface as readable tool errors`);
 
 const calls = (await apiCalls()).slice(before);
 const firstToken = calls[0].auth;

@@ -37,6 +37,7 @@ http.createServer(async (req, res) => {
 	if (p === "/api/v3/activities/1") return send(200, { ...activity(1), description: "Easy", splits_metric: [{ split: 1, distance: 1000, moving_time: 290, elapsed_time: 295, average_speed: 3.45, average_heartrate: 148 }], best_efforts: [{ name: "5k", elapsed_time: 1450, moving_time: 1450, distance: 5000 }], segment_efforts: [] });
 	if (p === "/api/v3/activities/1/streams") return send(200, { heartrate: { data: Array.from({ length: 1000 }, (_, i) => 120 + (i % 50)), original_size: 1000 }, time: { data: Array.from({ length: 1000 }, (_, i) => i), original_size: 1000 } });
 	if (p === "/api/v3/activities/1/zones") return send(402, { message: "Payment Required" });
+	if (p === "/api/v3/athlete/clubs") return send(403, { message: "Forbidden", errors: [{ resource: "Application", field: "Status", code: "Inactive" }] });
 	if (p === "/api/v3/segments/starred") return send(429, { message: "Rate Limit Exceeded" }, { "X-ReadRateLimit-Usage": "101,500", "X-ReadRateLimit-Limit": "100,1000" });
 	send(404, { message: "Record Not Found" });
 }).listen(port, () => console.log(`mock strava on ${port}`));
