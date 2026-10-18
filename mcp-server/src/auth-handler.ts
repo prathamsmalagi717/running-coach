@@ -33,9 +33,10 @@ export interface Props {
 	[key: string]: unknown;
 }
 
+// Trim secrets: values piped into `wrangler secret put` can carry a trailing newline, which Strava rejects.
 export const stravaConfig = (env: Env): StravaConfig => ({
-	clientId: env.STRAVA_CLIENT_ID,
-	clientSecret: env.STRAVA_CLIENT_SECRET,
+	clientId: env.STRAVA_CLIENT_ID?.trim(),
+	clientSecret: env.STRAVA_CLIENT_SECRET?.trim(),
 	oauthBase: env.STRAVA_OAUTH_BASE,
 	apiBase: env.STRAVA_API_BASE,
 });

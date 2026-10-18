@@ -45,6 +45,7 @@ assert.equal(res.status, 302, await res.text());
 const stravaUrl = new URL(res.headers.get("location"));
 assert.equal(stravaUrl.origin + stravaUrl.pathname, `${MOCK}/oauth/authorize`);
 assert.equal(stravaUrl.searchParams.get("scope"), "read,activity:read_all,profile:read_all");
+assert.equal(stravaUrl.searchParams.get("client_id"), "1"); // secret was set with surrounding whitespace
 step(`approved, sent to Strava login`);
 
 // 5. Strava -> callback -> client redirect with code
