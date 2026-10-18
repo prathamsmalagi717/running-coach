@@ -1,0 +1,19 @@
+// Cloudflare Workers configuration. See README.md for the one-time setup steps.
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "strava-mcp",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-10-01",
+	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+	// Secrets (set with `npx wrangler secret put <NAME>`):
+	//   STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET
+	// Optional plain var: ALLOWED_ATHLETE_IDS="12345678" to lock the connector to your own Strava account.
+	"kv_namespaces": [
+		{
+			"binding": "OAUTH_KV",
+			"id": "REPLACE_WITH_YOUR_KV_ID"
+		}
+	],
+	"observability": { "enabled": true },
+	"dev": { "port": 8788 }
+}
